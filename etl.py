@@ -1,6 +1,3 @@
-#import pandas as pd
-import cassandra
-#import re
 import os
 import glob
 import numpy as np
@@ -8,7 +5,7 @@ import json
 import csv
 from cassandra.cluster import Cluster
 from create_tables import CqlHelper
-from cql_queries import insert_songs_by_session, insert_songs_by_user, insert_users_by_song
+from cql_queries import insert_songs_by_session, insert_songs_by_user, insert_users_by_song, select_query1, select_query2, select_query3
 
 def prepare_denormalized_csv(filepath, denorm_file):
     """
@@ -92,9 +89,17 @@ def main():
 
     # Select data
     try:
-        rows = session.execute("SELECT * from played_songs_by_session WHERE session_id = {} AND item_in_session = {}".format(806, 2))
-        for user_row in rows:
-            print(user_row)
+        rows = session.execute(select_query1)
+        for row in rows:
+            print(row)
+        print("-----------------------------")
+        rows = session.execute(select_query2)
+        for row in rows:
+            print(row)
+        print("-----------------------------")
+        rows = session.execute(select_query3)
+        for row in rows:
+            print(row)
     except Exception as e:
         print(e)
     finally:
@@ -105,7 +110,9 @@ def main():
 if __name__ == "__main__":
     main()
 
-    
+    ## TO-DO: Query 2: Give me only the following: name of artist, song (sorted by itemInSession) and user (first and last name)\
+    ## for userid = 10, sessionid = 182
+
 
  # print("TABLES:", cluster.metadata.keyspaces["music_library"].tables)
     # print("TABLES:", cluster.metadata.keyspaces["music_library"].tables)
