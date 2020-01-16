@@ -28,11 +28,9 @@ def prepare_denormalized_csv(filepath, denorm_file):
             csvreader = csv.reader(csvfile)
             next(csvreader)
             for line in csvreader:
-                #print(line)
                 full_data_rows_list.append(line)
 
     print("Total Records: {}", len(full_data_rows_list))
-
     # Creating a smaller event data csv file called event_datafile_full csv that will be used to insert data into the Cassandra tables
     csv.register_dialect('myDialect', quoting=csv.QUOTE_ALL, skipinitialspace=True)
     with open('event_datafile_new.csv', 'w', encoding='utf8', newline='') as f:
@@ -90,14 +88,17 @@ def main():
     # Select data
     try:
         rows = session.execute(select_query1)
+        print("Result of Query #1")
         for row in rows:
             print(row)
         print("-----------------------------")
         rows = session.execute(select_query2)
+        print("Result of Query #2")
         for row in rows:
             print(row)
         print("-----------------------------")
         rows = session.execute(select_query3)
+        print("Result of Query #3")
         for row in rows:
             print(row)
     except Exception as e:
@@ -109,31 +110,3 @@ def main():
    
 if __name__ == "__main__":
     main()
-
-    ## TO-DO: Query 2: Give me only the following: name of artist, song (sorted by itemInSession) and user (first and last name)\
-    ## for userid = 10, sessionid = 182
-
-
- # print("TABLES:", cluster.metadata.keyspaces["music_library"].tables)
-    # print("TABLES:", cluster.metadata.keyspaces["music_library"].tables)
-
-    '''
-    Create queries to ask the following three questions of the data
-    1. Give me the artist, song title and song's length in the music app history that was heard during sessionId = 338, and itemInSession = 4
-    2. Give me only the following: name of artist, song (sorted by itemInSession) and user (first and last name) for userid = 10, sessionid = 182
-    3. Give me every user name (first and last) in my music app history who listened to the song 'All Hands Against His Own'
-    
-    artist
-    firstName of user
-    gender of user
-    item number in session
-    last name of user
-    length of the song
-    level (paid or free song)
-    location of the user
-    sessionId
-    song title
-    userId
-
-    Sharpe & The Magnetic Zeros","Chloe","F","44","Cuevas","306.31138","paid","San Francisco-Oakland-Hayward, CA","648","Home","49"
-    '''
