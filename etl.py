@@ -1,6 +1,5 @@
 import os
 import glob
-import numpy as np
 import json
 import csv
 from cassandra.cluster import Cluster

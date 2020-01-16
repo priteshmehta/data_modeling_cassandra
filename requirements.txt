@@ -1,4 +1,2 @@
-pandas
 cassandra
 cassandra-driver
-numpy
