@@ -74,9 +74,9 @@ def main():
         next(csvreader)
         for line in csvreader:
             try:
-                cql_helper.insert_data(insert_songs_by_session, (int(line[8]), int(line[3]), line[0], line[9], line[5]))
-                cql_helper.insert_data(insert_songs_by_user, (int(line[10]), int(line[8]),line[0], int(line[3]), line[9], line[1], line[4]))
-                cql_helper.insert_data(insert_users_by_song, (line[9], line[0], line[1], line[4]))
+                cql_helper.insert_data(insert_songs_by_session, (int(line[8]), int(line[3]), line[0], line[9], float(line[5])))
+                cql_helper.insert_data(insert_songs_by_user, (int(line[10]), int(line[8]),int(line[3]), line[0], line[9], line[1], line[4]))
+                cql_helper.insert_data(insert_users_by_song, (line[9], line[0], int(line[10]), line[1], line[4]))
             except Exception as e:
                 print(e)
                 cql_helper.drop_tables()
